@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: glider911
+      MYSQL_INITDB_SKIP_TZINFO: '1'
+      MYSQL_DATABASE: finanzas
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: adminpassword
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # Permitir conexiones sin contraseña
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mynetwork
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
