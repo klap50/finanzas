@@ -1,25 +1,26 @@
 import mysql.connector
-import configparser
-import os
+from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS
 
-# Read the configuration from the config.ini file
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-# Get the database configuration values from the config.ini file or from environment variables
-db_host = os.environ.get('DB_HOST', config['database']['host'])
-db_port = os.environ.get('DB_PORT', config['database']['port'])
-db_name = os.environ.get('DB_NAME', config['database']['database'])
-db_user = os.environ.get('DB_USER', config['database']['user'])
-db_password = os.environ.get('DB_PASSWORD', config['database']['password'])
-
-def establecer_conexion():
-    # Establish a connection to the database
-    cnx = mysql.connector.connect(
-        host=db_host,
-        port=db_port,
-        user=db_user,
-        password=db_password,
-        database=db_name
+def create_connection():
+    conn = mysql.connector.connect(
+        host=DB_HOST,
+        port=DB_PORT,
+        user=DB_USER,
+        password=DB_PASS,
+        database=DB_NAME
     )
-    return cnx
+    return conn
+
+def create_tables():
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    # Create ingresos table
+    cursor.execute("CREATE TABLE IF NOT EXISTS ingresos (id INT AUTO_INCREMENT PRIMARY KEY, monto FLOAT, descripcion VARCHAR(255))")
+
+    # Create egresos table
+    cursor.execute("CREATE TABLE IF NOT EXISTS egresos (id INT AUTO_INCREMENT PRIMARY KEY, monto FLOAT, descripcion VARCHAR(255))")
+
+    conn.commit()
+    cursor.close()
+    conn.close()

@@ -1,21 +1,47 @@
 import ingresos
 import egresos
 
-def mostrar_menu():
+def mostrar_datos():
+    conn = database.create_connection()
+    cursor = conn.cursor()
+
+    # Mostrar ingresos
+    cursor.execute("SELECT * FROM ingresos")
+    ingresos = cursor.fetchall()
+    print("\033[1;34;40m"+"Ingresos:" + "\033[0m")
+    for ingreso in ingresos:
+        print(f"Monto: {ingreso[1]} - Descripción: {ingreso[2]}")
+
+    # Mostrar egresos
+    cursor.execute("SELECT * FROM egresos")
+    egresos = cursor.fetchall()
+    print("\033[1;31;40m"+"Egresos:" + "\033[0m")
+    for egreso in egresos:
+        print(f"Monto: {egreso[1]} - Descripción: {egreso[2]}")
+
+    cursor.close()
+    conn.close()
+
+def main():
     while True:
-        print("-------- MENU --------")
-        print("1. Ingresos")
-        print("2. Egresos")
-        print("3. Salir")
+        print("\033[1;32;40m"+"Menú principal:" + "\033[0m")
+        print("1. Agregar ingreso")
+        print("2. Agregar egreso")
+        print("3. Mostrar")
+        print("4. Salir")
+
         opcion = input("Seleccione una opción: ")
-        
+
         if opcion == "1":
-            ingresos.mostrar_menu_ingresos()
+            ingresos.agregar_ingreso()
         elif opcion == "2":
-            egresos.mostrar_menu_egresos()
+            egresos.agregar_egreso()
         elif opcion == "3":
+            mostrar_datos()
+        elif opcion == "4":
             break
         else:
-            print("Opción inválida. Intente nuevamente.")
+            print("\033[1;31;40m"+"Opción no válida, por favor intente nuevamente." + "\033[0m")
 
-mostrar_menu()
+if __name__ == "__main__":
+    main()

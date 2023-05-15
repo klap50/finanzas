@@ -1,8 +1,13 @@
 import os
+import configparser
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 
 # get environment variables
-DB_HOST = os.getenv('localhost')
-DB_PORT = os.getenv('3306')
-DB_NAME = os.getenv('finanzas')
-DB_USER = os.getenv('root')
-DB_PASS = os.getenv('your_strongpassowrd')
+DB_HOST = config.get('localhost')
+DB_PORT = config.get('3306')
+DB_NAME = config.get('finanzas')
+DB_USER = config.get('root')
+DB_PASS = config.get('glider911')
