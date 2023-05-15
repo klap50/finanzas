@@ -4,10 +4,9 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-
-# get environment variables
-DB_HOST = config.get('localhost')
-DB_PORT = config.get('3306')
-DB_NAME = config.get('finanzas')
-DB_USER = config.get('root')
-DB_PASS = config.get('glider911')
+# Get environment variables from config.ini
+DB_HOST = config.get('database', 'DB_HOST')
+DB_PORT = config.get('database', 'DB_PORT')
+DB_NAME = config.get('database', 'DB_NAME')
+DB_USER = config.get('database', 'DB_USER')
+DB_PASS = config.get('database', 'DB_PASS')
