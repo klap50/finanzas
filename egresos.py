@@ -1,3 +1,5 @@
+import database
+
 def mostrar_registros(tipo):
     connection = database.establecer_conexion()
     cursor = connection.cursor()
