@@ -1,0 +1,4 @@
+curses
+tabulate
+colorama
+mysql-connector-python
