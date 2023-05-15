@@ -1,9 +1,10 @@
+import db #cambia 'import database' a import DB
 import ingresos
 import egresos
 
 def mostrar_datos():
-    conn = database.create_connection()
-    cursor = conn.cursor()
+    db_instance = db.Database()
+    cursor = db_instance.cursor()
 
     # Mostrar ingresos
     cursor.execute("SELECT * FROM ingresos")
@@ -20,7 +21,8 @@ def mostrar_datos():
         print(f"Monto: {egreso[1]} - Descripción: {egreso[2]}")
 
     cursor.close()
-    conn.close()
+    db_instance.close()
+
 
 def main():
     while True:
