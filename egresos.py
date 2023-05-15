@@ -1,26 +1,28 @@
 import database
 
-def mostrar_registros(tipo):
-    connection = database.establecer_conexion()
-    cursor = connection.cursor()
+from colorama import init, Fore, Style
 
-    print("-------------------------")
-    print("ID | Descripción | Monto")
-    print("-------------------------")
+def mostrar_menu_egresos():
+    init(autoreset=True)
 
-    select_query = "SELECT id, descripcion, monto FROM finanzas WHERE tipo = %s"
-    cursor.execute(select_query, (tipo,))
-    records = cursor.fetchall()
-
-    for record in records:
-        id_registro = record[0]
-        descripcion = record[1]
-        monto = record[2]
-
-        print(f"{id_registro} | {descripcion} | {monto:.2f}")
-
-    connection.close()
-
+    while True:
+        print(Fore.GREEN + "-------- EGRESOS --------")
+        print(Fore.YELLOW + "1. Mostrar registros")
+        print(Fore.YELLOW + "2. Agregar registro")
+        print(Fore.YELLOW + "3. Borrar registro")
+        print(Fore.RED + "4. Volver atrás")
+        opcion = input(Style.BRIGHT + "Seleccione una opción: ")
+        
+        if opcion == "1":
+            mostrar_registros("Egreso")
+        elif opcion == "2":
+            agregar_registro("Egreso")
+        elif opcion == "3":
+            borrar_registro("Egreso")
+        elif opcion == "4":
+            break
+        else:
+            print(Fore.RED + "Opción inválida. Intente nuevamente.")
 
 def agregar_registro(tipo):
     connection = database.establecer_conexion()
@@ -75,4 +77,3 @@ def mostrar_menu_egresos():
             break
         else:
             print("Opción inválida. Intente nuevamente.")
-
