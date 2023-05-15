@@ -41,3 +41,4 @@ def menu_egresos():
             break
         else:
             print("Opción inválida. Por favor, ingrese una opción válida.")
+
